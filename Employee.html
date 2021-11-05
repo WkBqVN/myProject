@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <h2 class="text-center">Danh sách đơn hàng</h2>
+                <table class="table text-center table-striped" id="table-order">
+                    <thead>
+                        <tr>
+                            <th scope="col">Order ID</th>
+                            <th scope="col">Kích cỡ combo</th>
+                            <th scope="col">Loại pizza</th>
+                            <th scope="col">Nước uống</th>
+                            <th scope="col">Thành tiền</th>
+                            <th scope="col">Họ và tên</th>
+                            <th scope="col">Số điện thoại</th>
+                            <th scope="col">Trạng thái</th>
+                            <th scope="col">Chi tiết</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+<script src = "IndexData.js"></script>
+<script>
+"use strict";
+/*** REGION 1 - Global variables - Vùng khai báo biến, hằng số, tham số TOÀN CỤC */
+// const var
+const gORDERID_COLUMN = 0;
+const gPRE_END_COLUMN = 7;
+const gCHI_TIET_COLUMN = 8;
+const gEND_OF_COLUMN_AND_ROW = -1;
+/*** REGION 2 - Vùng gán / thực thi sự kiện cho các elements */
+onPageLoading();
+/*** REGION 3 - Event handlers - Vùng khai báo các hàm xử lý sự kiện */
+// Hàm thực hiện khi load trang
+function onPageLoading() {
+    getAllOrders();
+}
+/*** REGION 4 - Common funtions - Vùng khai báo hàm dùng chung trong toàn bộ chương trình*/
+// Hàm thực hiện việc load all orders từ server và load vào table
+function getAllOrders() {
+    "use strict";
+    var vXmlHttpGetAllOrders = new XMLHttpRequest();
+    // send request to server
+    sendRequestToServer("GET",vXmlHttpGetAllOrders,gBASE_URL.getAllOrderUrl(),true);
+    // handle resposne -> load data toable
+    vXmlHttpGetAllOrders.onreadystatechange = function () {
+        if (this.readyState == gREQUEST_READY_STATUS_FINISH_AND_OK && this.status == gREQUEST_STATUS_OK) {
+            loadOrderToTable(vXmlHttpGetAllOrders);
+        }
+    }
+}
+//function to load data to table
+// input: xml http request đã đươc trả lời
+// ouptut: dữ liệu hiên thi trên bảng
+function loadOrderToTable(paramXMLHttpAllOrder) {
+    "use strict";
+    console.log(paramXMLHttpAllOrder.responseText);
+    // take table body element. clear all data before create new table
+    let vTable = document.getElementById("table-order");
+    let vTableBody = vTable.getElementsByTagName("tbody")[0];
+    vTableBody.innerHTML = "";
+    // take obj and create new arrays for import data to table
+    let vObj = JSON.parse(paramXMLHttpAllOrder.responseText);
+    let vTableObjArrays = generateObjForTable(vObj);
+    // insert data from arrays
+    vTableObjArrays.dataArrays.forEach((valueArrays,index) => {
+        insertDataToTable(valueArrays,index);
+        if(index == gPRE_END_COLUMN){ // if last index change to import btn
+            insertDataToTable(vTableObjArrays.orderIdArrays,gCHI_TIET_COLUMN);
+        }
+    })
+}
+//function to insert data to table
+//in : paramObj with index
+//out: insert correct data base on index
+function insertDataToTable(paramObj,paramIndex) {
+    "user strict";
+    let vTable = document.getElementById("table-order");
+    let vTableBody = vTable.getElementsByTagName("tbody")[0];
+    // if index == 0 . create new row and insert
+    if (paramIndex === gORDERID_COLUMN) {
+        for (let bI = 0; bI < paramObj.length; bI++) {
+            let bNewRow = vTableBody.insertRow(gEND_OF_COLUMN_AND_ROW);
+            let bNewCell = bNewRow.insertCell(paramIndex);
+            bNewCell.innerHTML = paramObj[bI];
+        }
+    } else if (paramIndex === gCHI_TIET_COLUMN) { // if index is last . import btn and set data to btn
+        for (let bI = 0; bI < paramObj.length; bI++) {
+            let bRow = vTableBody.getElementsByTagName("tr")[bI];
+            // create and add data for btn 
+            let bBtn = document.createElement("button");
+            bBtn.textContent = "Chi tiết";
+            bBtn.className = "btn bg-dark text-white";
+            bBtn.setAttribute("data-id",paramObj[bI].id)
+            bBtn.setAttribute("data-orderid",paramObj[bI].orderId);
+            bBtn.addEventListener("click",function(){
+                console.log("Id: " + this.dataset.id);
+                console.log("OrderId :" +this.dataset.orderid);
+                onBtnChiTietClick(this);
+            })
+            // insert btn to chi tiet colum
+            let bNewCell = bRow.insertCell(paramIndex);
+            bNewCell.appendChild(bBtn);
+        }
+    } else { // other columnj just insert correct data
+        for (let bI = 0; bI < paramObj.length; bI++) {
+            let bRow = vTableBody.getElementsByTagName("tr")[bI];
+            let bCell = bRow.insertCell(paramIndex);
+            bCell.innerHTML = paramObj[bI];
+        }
+    }
+}
+// function to genera data to table
+//in : and obj
+//out: two array, one for table and one for data set
+function generateObjForTable(paramObj){
+    "use strict";
+    let vResultObj = {
+        dataArrays : [],
+        orderIdArrays :[]
+    }
+    // mapping array from obj to insert table
+    vResultObj.dataArrays.push(paramObj.map((obj) => (obj.orderId)));
+    vResultObj.dataArrays.push(paramObj.map((obj) => (obj.kichCo)));
+    vResultObj.dataArrays.push(paramObj.map((obj) => (obj.loaiPizza)));
+    vResultObj.dataArrays.push(paramObj.map((obj) => (obj.idLoaiNuocUong)));
+    vResultObj.dataArrays.push(paramObj.map((obj) => (obj.thanhTien)));
+    vResultObj.dataArrays.push(paramObj.map((obj) => (obj.hoTen)));
+    vResultObj.dataArrays.push(paramObj.map((obj) => (obj.soDienThoai)));
+    vResultObj.dataArrays.push(paramObj.map((obj) => (obj.trangThai)));
+    // mapping array for data set
+    for(let bI = 0 ; bI < paramObj.length; bI++){
+        let bIdObj = paramObj[bI].id;
+        let bOrderIdObj = paramObj[bI].orderId;
+        // push obj with 2 key id and orderid to orderid arrays
+        vResultObj.orderIdArrays.push( { "id": bIdObj, "orderId": bOrderIdObj} );
+    }
+    console.log(vResultObj);
+    return vResultObj;
+}
+// function hanle chitiet btn click
+//in: param btn
+//out: add query to string then open new site
+function onBtnChiTietClick(paramButton){
+    "use strict";
+    let vId = paramButton.dataset.id;
+    let vOrderId = paramButton.dataset.orderid;
+    let vBaseUrl = "OrderDetails.html";
+    let vSiteToOpen = vBaseUrl + "?id=" + vId
+                        + "&orderid=" + vOrderId;
+    if(vId != null && vOrderId != null){
+        window.location.href = vSiteToOpen;
+    }
+}
+</script>
+</html>

@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order details by Employee</title>
+    <!-- font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <div class="container form-group text-center bg-dark" style="border-radius: 8px;">
+        <div class="col-sm-12 text-white">
+            <h1>Order Details</h1>
+        </div>
+        <div class="col-sm-12 row">
+            <div class="col-sm-4 bg-dark text-white">
+                <label>Order Id (Mã đơn hàng) </label>
+            </div>
+            <div class="col-sm-8">
+                <input id="inp-order-id" class="w-100 text-center" style="border-radius: 8px;">
+            </div>
+        </div>
+        <div class="col-sm-12 row">
+            <div class="col-sm-4 bg-dark text-white">
+                <label> Cỡ Combo Menu </label>
+            </div>
+            <div class="col-sm-8">
+                <select id="select-menu" class="w-100 text-center" style="border-radius: 8px;"></select>
+            </div>
+        </div>
+
+        <div class="col-sm-12 row">
+            <div class="col-sm-4 bg-dark text-white">
+                <label> Đường Kính Pizza </label>
+            </div>
+            <div class="col-sm-8">
+                <input id="inp-duong-kinh" class="w-100 text-center" style="border-radius: 8px;">
+            </div>
+        </div>
+        <div class="col-sm-12 row">
+            <div class="col-sm-4 bg-dark text-white">
+                <label> Sườn Nướng (Miếng) </label>
+            </div>
+            <div class="col-sm-8">
+                <input id="inp-suon-nuong" class="w-100 text-center" style="border-radius: 8px;">
+            </div>
+        </div>
+        <div class="col-sm-12 row">
+            <div class="col-sm-4 bg-dark text-white">
+                <label> Đồ Uống </label>
+            </div>
+            <div class="col-sm-8">
+                <select id="select-type-drink" class="w-100 text-center" style="border-radius: 8px;"></select>
+            </div>
+        </div>
+        <div class="col-sm-12 row">
+            <div class="col-sm-4 bg-dark text-white">
+                <label> Số lượng nước Uống </label>
+            </div>
+            <div class="col-sm-8">
+                <input id="inp-drink-number" class="w-100 text-center" style="border-radius: 8px;">
+            </div>
+        </div>
+        <div class="col-sm-12 row">
+            <div class="col-sm-4 bg-dark text-white">
+                <label> Voucher ID (Mã Voucher) </label>
+            </div>
+            <div class="col-sm-8">
+                <input id="inp-voucher-id" class="w-100 text-center" style="border-radius: 8px;">
+            </div>
+        </div>
+        <div class="col-sm-12 row">
+            <div class="col-sm-4 bg-dark text-white">
+                <label> Loại Pizza (Pizza type) </label>
+            </div>
+            <div class="col-sm-8">
+                <select id="select-pizza-type" class="w-100 text-center" style="border-radius: 8px;"></select>
+            </div>
+        </div>
+        <div class="col-sm-12 row">
+            <div class="col-sm-4 bg-dark text-white">
+                <label> Salar (gram) </label>
+            </div>
+            <div class="col-sm-8">
+                <input id="inp-salad" class="w-100 text-center" style="border-radius: 8px;">
+            </div>
+        </div>
+        <div class="col-sm-12 row">
+            <div class="col-sm-4 bg-dark text-white">
+                <label> Thành Tiền </label>
+            </div>
+            <div class="col-sm-8">
+                <input id="inp-thanh-tien" class="w-100 text-center" style="border-radius: 8px;">
+            </div>
+        </div>
+        <div class="col-sm-12 row">
+            <div class="col-sm-4 bg-dark text-white">
+                <label> Giảm Giá (Discount) </label>
+            </div>
+            <div class="col-sm-8">
+                <input id="inp-discount" class="w-100 text-center" style="border-radius: 8px;">
+            </div>
+        </div>
+        <div class="col-sm-12 row">
+            <div class="col-sm-4 bg-dark text-white">
+                <label> Họ và Tên </label>
+            </div>
+            <div class="col-sm-8">
+                <input id="inp-fullname" class="w-100 text-center" style="border-radius: 8px;">
+            </div>
+        </div>
+        <div class="col-sm-12 row">
+            <div class="col-sm-4 bg-dark text-white">
+                <label> Email </label>
+            </div>
+            <div class="col-sm-8">
+                <input id="inp-email" class="w-100 text-center" style="border-radius: 8px;">
+            </div>
+        </div>
+        <div class="col-sm-12 row">
+            <div class="col-sm-4 bg-dark text-white">
+                <label> Số điện thoại </label>
+            </div>
+            <div class="col-sm-8">
+                <input id="inp-phone-number" class="w-100 text-center" style="border-radius: 8px;">
+            </div>
+        </div>
+        <div class="col-sm-12 row">
+            <div class="col-sm-4 bg-dark text-white">
+                <label> Địa chỉ </label>
+            </div>
+            <div class="col-sm-8">
+                <input id="inp-address" class="w-100 text-center" style="border-radius: 8px;">
+            </div>
+        </div>
+        <div class="col-sm-12 row">
+            <div class="col-sm-4 bg-dark text-white">
+                <label> Lời nhắn </label>
+            </div>
+            <div class="col-sm-8">
+                <input id="inp-message" class="w-100 text-center" style="border-radius: 8px;">
+            </div>
+        </div>
+        <div class="col-sm-12 row">
+            <div class="col-sm-4 bg-dark text-white">
+                <label> Trạng thái đơn hàng </label>
+            </div>
+            <div class="col-sm-8">
+                <input id="inp-status" class="w-100 text-center" style="border-radius: 8px;">
+            </div>
+        </div>
+        <div class="col-sm-12 row">
+            <div class="col-sm-4 bg-dark text-white">
+                <label> Ngày tạo đơn </label>
+            </div>
+            <div class="col-sm-8">
+                <input id="inp-date-create" class="w-100 text-center" style="border-radius: 8px;">
+            </div>
+        </div>
+        <div class="col-sm-12 row">
+            <div class="col-sm-4 bg-dark text-white">
+                <label> Ngày cập nhật </label>
+            </div>
+            <div class="col-sm-8">
+                <input id="inp-date-update" class="w-100 text-center" style="border-radius: 8px;">
+            </div>
+        </div>
+
+    </div>
+</body>
+<script src = "IndexData.js"></script>
+<script>
+/*** REGION 1 - Global variables - Vùng khai báo biến, hằng số, tham số TOÀN CỤC */
+/*** REGION 2 - Vùng gán / thực thi hàm xử lý sự kiện cho các elements */
+onPageLoading();
+/*** REGION 3 - Event handlers - Vùng khai báo các hàm xử lý sự kiện */
+//function auload when pageloading
+//in: no params
+//out: load option to dirnk and menu and typepiza, load data to form
+function onPageLoading() {
+    "use strict";
+    // 1 create promsise for load
+    let vOrderPromise = new Promise((resolve, reject) => {
+        let vXmlHttp = new XMLHttpRequest();
+        // sendRequestToServer
+        sendRequestToServer("GET",vXmlHttp,gBASE_URL.getDrinkListUrl(),true);
+        // handle reposen from
+        vXmlHttp.onload = function () {
+            if (vXmlHttp.readyState == gREQUEST_READY_STATUS_FINISH_AND_OK && vXmlHttp.status == gREQUEST_STATUS_OK) {
+                resolve(JSON.parse(vXmlHttp.responseText));
+            } else {
+                reject("Cant load data to form");
+            }
+        }
+    });
+    vOrderPromise.then(
+        (dataDrinkObj) => (loadOptionsToDrink(dataDrinkObj)),
+        (error) => { console.log(error) }
+    ).then(() => { loadOptionsToTypePizza() })
+    .then(() => {loadOptionsToMenu()})
+    .then(() => { loadDataToForm()})
+}
+/*** REGION 4 - Common funtions - Vùng khai báo hàm dùng chung trong toàn bộ chương trình*/
+//function to laad data to form after validate
+//in: no params
+//out: form loaded to data
+function loadDataToForm() {
+    "use strict";
+    //1. read data
+    let vUrl = new URL(window.location.href);
+    let vIdObj = {
+        id: vUrl.searchParams.get("id"),
+        orderId: vUrl.searchParams.get("orderid"),
+    }
+    //2. validate data
+    if (vIdObj.id !== null && vIdObj.orderId !== null) {
+        console.log("Id: " + vIdObj.id);
+        console.log("Order Id: " + vIdObj.orderId);
+        let vXmlHttp = new XMLHttpRequest();
+        // sendGetRequestToServer(vXmlHttp, vIdObj.orderId);
+        sendRequestToServer("GET",vXmlHttp,gBASE_URL.getOrderById(vIdObj.orderId),true);
+        //4.handle resposne
+        handleResponseFromServer(vXmlHttp);
+    }
+}
+// functin to handle reponse form server
+//in: xml http obj
+//out: updata to from by pass obj
+function handleResponseFromServer(paramXhttp) {
+    "use strict";
+    paramXhttp.onreadystatechange = function () {
+        if (this.readyState == gREQUEST_READY_STATUS_FINISH_AND_OK && this.status == gREQUEST_STATUS_OK) {
+            let bOrderReponse = JSON.parse(this.responseText);
+            console.log(bOrderReponse);
+            upLoadDataToForm(bOrderReponse);
+        }
+    }
+}
+//function update load data to form by pass obj
+//in : a order obj
+//out: data got form correctly
+function upLoadDataToForm(paramOrderObj) {
+    "use strict";
+    let vOrderId = document.getElementById("inp-order-id");
+    let vMenu = document.getElementById("select-menu");
+    let vDuongKinh = document.getElementById("inp-duong-kinh");
+    let vSuonNuong = document.getElementById("inp-suon-nuong");
+    let vDoUong = document.getElementById("select-type-drink");
+    let vSoLuongNuocUong = document.getElementById("inp-drink-number");
+    let vVoucherId = document.getElementById("inp-voucher-id");
+    let vLoaiPizza = document.getElementById("select-pizza-type");
+    let vSalad = document.getElementById("inp-salad");
+    let vThanhTien = document.getElementById("inp-thanh-tien");
+    let vGiamGia = document.getElementById("inp-discount");
+    let vFullName = document.getElementById("inp-fullname");
+    let vEmail = document.getElementById("inp-email");
+    let vSoDienThoai = document.getElementById("inp-phone-number");
+    let vDiaChi = document.getElementById("inp-address");
+    let vLoiNhan = document.getElementById("inp-message");
+    let vTrangThai = document.getElementById("inp-status");
+    let vNgayTao = document.getElementById("inp-date-create");
+    let vNgayCapNhat = document.getElementById("inp-date-update");
+    //orderid
+    vOrderId.value = paramOrderObj.orderId;
+    //menu
+    for(let bI = 0 ; bI < vMenu.options.length; bI++){
+        let vSingleOption = vMenu.options[bI];
+        if(vSingleOption.value === paramOrderObj.kichCo){
+            vSingleOption.setAttribute("selected","selected");
+        }
+    }
+    //duongkinh
+    vDuongKinh.value = paramOrderObj.duongKinh;
+    //suon
+    vSuonNuong.value = paramOrderObj.suon;
+    //laoi do uong
+    for (let bI = 0; bI < vDoUong.options.length; bI++) {
+        let vSingleOption = vDoUong.options[bI];
+        if (vSingleOption.value.toUpperCase() === paramOrderObj.idLoaiNuocUong.toUpperCase()) {
+            vSingleOption.setAttribute("selected", "selected");
+        }
+    }
+    // vDoUong.value = paramOrderObj.idLoaiNuocUong;
+    vSoLuongNuocUong.value = paramOrderObj.soLuongNuoc;
+    // voucher id
+    vVoucherId.value = paramOrderObj.idVourcher;
+    for (let bI = 0; bI < vLoaiPizza.options.length; bI++) {
+        let vSingleOption = vLoaiPizza.options[bI];
+        if (vSingleOption.value.toUpperCase() === paramOrderObj.loaiPizza.toUpperCase()) {
+            vSingleOption.setAttribute("selected", "selected");
+        }
+    }
+    // vLoaiPizza.value = paramOrderObj.loaiPizza;
+    vSalad.value = paramOrderObj.salad;
+    vThanhTien.value = paramOrderObj.thanhTien;
+    vGiamGia.value = paramOrderObj.giamGia;
+    vFullName.value = paramOrderObj.hoTen;
+    vEmail.value = paramOrderObj.email;
+    vSoDienThoai.value = paramOrderObj.soDienThoai;
+    vDiaChi.value = paramOrderObj.diaChi;
+    vLoiNhan.value = paramOrderObj.loiNhan;
+    vTrangThai.value = paramOrderObj.trangThai;
+    vNgayTao.value = new Date(paramOrderObj.ngayTao);
+    vNgayCapNhat.value = new Date(paramOrderObj.ngayCapNhat);
+}
+//function to load option to drink
+//in: drink obj
+//out: load options to drink select
+function loadOptionsToDrink(paramObj) {
+    "use strict";
+    let vDrinkTypeElement = document.getElementById("select-type-drink");
+    for (let bI = 0; bI < paramObj.length; bI++) {
+        let vOption = document.createElement("option");
+        vOption.value = paramObj[bI].maNuocUong;
+        vOption.text = paramObj[bI].tenNuocUong;
+        vDrinkTypeElement.appendChild(vOption);
+    }
+}
+//function to load options to type pizza
+//in: no param
+//out: load options to pizza type
+function loadOptionsToTypePizza() {
+    "use strict";
+    let vTypePizzaArray = ["HAWAII", "BACON", "SEAFOOD"];
+    for (let bI = 0; bI < vTypePizzaArray.length; bI++) {
+        let vOption = document.createElement("option");
+        vOption.value = vTypePizzaArray[bI];
+        vOption.text = vTypePizzaArray[bI];
+        document.getElementById("select-pizza-type").appendChild(vOption);
+    }
+}
+//fucntion to options to menu
+//in: no prams
+//out: load options to menu
+function loadOptionsToMenu(){
+    "use strict";
+    let vMenuzie = ["S","L","M"];
+    for(let bI =0; bI < vMenuzie.length ; bI++){
+        let vOption = document.createElement("option");
+        vOption.value = vMenuzie[bI];
+        vOption.text = vMenuzie[bI];
+        document.getElementById("select-menu").appendChild(vOption)
+    }
+}
+</script>
+</html>
